@@ -30,10 +30,25 @@ class SimpleFilterViewController: UIViewController {
         source?.running = false
     }
     
+    func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+
+    
     func setupCameraSource() {
+        
         source = CaptureBufferSource(position: AVCaptureDevicePosition.Front) { [unowned self] (buffer, transform) in
+            
             let input = CIImage(buffer: buffer).imageByApplyingTransform(transform)
-            let filter = blur(10) >>> hueAdjust(5)
+            let cropped = crop(CGRectMake(-784.0, -600, 600,600))
+
+            let filter = blur(10) >>> hueAdjust(5) >>> compositeSourceOver(cropped(input))
             self.coreImageView?.image = filter(input)
         }
         source?.running = true

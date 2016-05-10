@@ -114,6 +114,15 @@ func blendWithMask(background: CIImage, mask: CIImage) -> Filter {
     }
 }
 
+func crop(rect: CGRect) -> Filter {
+    return { image in
+        let cropRect = image.extent
+        debugPrint(image.extent)
+        return image.imageByCroppingToRect(rect)
+    }
+    
+}
+
 func colorOverlay(color: UIColor) -> Filter {
     return { image in
         let overlay = colorGenerator(color)(image)
