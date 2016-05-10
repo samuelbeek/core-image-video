@@ -27,8 +27,8 @@ class StaticVideoViewController: UIViewController {
         videoSource = VideoSampleBufferSource(url: url) { [unowned self] buffer in
             let image = CIImage(CVPixelBuffer: buffer)
             let background = kaleidoscope()(image)
-            let mask = radialGradient(image.extent().center, CGFloat(self.angleForCurrentTime) * 100)
-            let output = blendWithMask(image, mask)(background)
+            let mask = radialGradient(image.extent.center, radius: CGFloat(self.angleForCurrentTime) * 100)
+            let output = blendWithMask(image, mask: mask)(background)
             self.coreImageView?.image = output
         }
     }    

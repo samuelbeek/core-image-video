@@ -32,7 +32,7 @@ extension CGAffineTransform {
 
 extension CIImage {
     convenience init(buffer: CMSampleBuffer) {
-        self.init(CVPixelBuffer: CMSampleBufferGetImageBuffer(buffer))
+        self.init(CVPixelBuffer: CMSampleBufferGetImageBuffer(buffer)!)
     }
 }
 
