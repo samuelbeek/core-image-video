@@ -33,7 +33,7 @@ class SimpleFilterViewController: UIViewController {
     func setupCameraSource() {
         source = CaptureBufferSource(position: AVCaptureDevicePosition.Front) { [unowned self] (buffer, transform) in
             let input = CIImage(buffer: buffer).imageByApplyingTransform(transform)
-            let filter = hueAdjust(self.angleForCurrentTime)
+            let filter = blur(10) >>> hueAdjust(5)
             self.coreImageView?.image = filter(input)
         }
         source?.running = true

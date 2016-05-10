@@ -11,6 +11,7 @@ import UIKit
 
 typealias Filter = CIImage -> CIImage
 
+
 func blur(radius: Double) -> Filter {
     return { image in
         let parameters = [
