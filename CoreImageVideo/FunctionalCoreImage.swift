@@ -19,7 +19,7 @@ func blur(radius: Double) -> Filter {
         ]
         let filter = CIFilter(name: "CIGaussianBlur",
             withInputParameters: parameters)
-        return filter.outputImage
+        return filter!.outputImage!
     }
 }
 
@@ -28,7 +28,7 @@ func colorGenerator(color: UIColor) -> Filter {
         let parameters = [kCIInputColorKey: color]
         let filter = CIFilter(name: "CIConstantColorGenerator",
             withInputParameters: parameters)
-        return filter.outputImage
+        return filter!.outputImage!
     }
 }
 
@@ -40,7 +40,7 @@ func hueAdjust(angleInRadians: Float) -> Filter {
         ]
         let filter = CIFilter(name: "CIHueAdjust",
             withInputParameters: parameters)
-        return filter.outputImage
+        return filter!.outputImage!
     }
 }
 
@@ -50,7 +50,7 @@ func pixellate(scale: Float) -> Filter {
             kCIInputImageKey:image,
             kCIInputScaleKey:scale
         ]
-        return CIFilter(name: "CIPixellate", withInputParameters: parameters).outputImage
+        return CIFilter(name: "CIPixellate", withInputParameters: parameters)!.outputImage!
     }
 }
 
@@ -59,7 +59,7 @@ func kaleidoscope() -> Filter {
         let parameters = [
             kCIInputImageKey:image,
         ]
-        return CIFilter(name: "CITriangleKaleidoscope", withInputParameters: parameters).outputImage.imageByCroppingToRect(image.extent())
+        return CIFilter(name: "CITriangleKaleidoscope", withInputParameters: parameters)!.outputImage!.imageByCroppingToRect(image.extent)
     }
 }
 
@@ -70,7 +70,7 @@ func vibrance(amount: Float) -> Filter {
             kCIInputImageKey: image,
             "inputAmount": amount
         ]
-        return CIFilter(name: "CIVibrance", withInputParameters: parameters).outputImage
+        return CIFilter(name: "CIVibrance", withInputParameters: parameters)!.outputImage!
     }
 }
 
@@ -82,8 +82,8 @@ func compositeSourceOver(overlay: CIImage) -> Filter {
         ]
         let filter = CIFilter(name: "CISourceOverCompositing",
             withInputParameters: parameters)
-        let cropRect = image.extent()
-        return filter.outputImage.imageByCroppingToRect(cropRect)
+        let cropRect = image.extent
+        return filter!.outputImage!.imageByCroppingToRect(cropRect)
     }
 }
 
@@ -96,7 +96,7 @@ func radialGradient(center: CGPoint, radius: CGFloat) -> CIImage {
         "inputRadius0": radius,
         "inputRadius1": radius + 1
     ]
-    return CIFilter(name: "CIRadialGradient", withInputParameters: params).outputImage
+    return CIFilter(name: "CIRadialGradient", withInputParameters: params as? [String: AnyObject])!.outputImage!
 }
 
 func blendWithMask(background: CIImage, mask: CIImage) -> Filter {
@@ -108,8 +108,8 @@ func blendWithMask(background: CIImage, mask: CIImage) -> Filter {
         ]
         let filter = CIFilter(name: "CIBlendWithMask",
             withInputParameters: parameters)
-        let cropRect = image.extent()
-        return filter.outputImage.imageByCroppingToRect(cropRect)
+        let cropRect = image.extent
+        return filter!.outputImage!.imageByCroppingToRect(cropRect)
     }
 }
 
